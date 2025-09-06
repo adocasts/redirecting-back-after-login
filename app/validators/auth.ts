@@ -4,6 +4,7 @@ export const emailRule = () => vine.string().maxLength(254).email().normalizeEma
 
 export const loginValidator = vine.compile(
   vine.object({
+    forward: vine.string().optional(),
     email: emailRule(),
     password: vine.string().minLength(8),
     remember: vine.boolean().optional(),

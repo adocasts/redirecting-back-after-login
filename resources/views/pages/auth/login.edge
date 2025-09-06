@@ -1,4 +1,7 @@
 {{-- Markup Sourced From: https://preline.co/examples/forms-authentication.html --}}
+
+@let(forward = old('forward') ?? request.header('referrer'))
+
 @layout.auth({ title: 'Login' })
 
   <div class="text-center">
@@ -15,6 +18,8 @@
 
   <div class="mt-5">
     @form({ action: form.post('auth.login.store'), class: 'grid gap-y-4' })
+      <input type="hidden" name="forward" value="{{ forward ?? '' }}">
+
       @form.group({ label: 'Email address', name: 'email' })
         @!form.input({ type: 'email', required: true })
       @end

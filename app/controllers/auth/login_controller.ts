@@ -1,4 +1,5 @@
 import User from '#models/user'
+import RequestService from '#services/request_service'
 import { loginValidator } from '#validators/auth'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -13,6 +14,12 @@ export default class LoginController {
     const baseMessage = 'Welcome back'
 
     session.flash('success', user.fullName ? `${baseMessage}, ${user.fullName}` : baseMessage)
+
+    const forward = RequestService.getForwardUrl(data.forward)
+
+    if (forward) {
+      return response.redirect().toPath(forward)
+    }
 
     return response.redirect().toRoute('jumpstart')
   }
